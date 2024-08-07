@@ -4,46 +4,88 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white mx-3"><strong> Add, Edit, Delete features are not
-                                functional!</strong> This is a<strong> 
-                                    x
-                                </strong> feature! Click
-                            <strong>
-                                    href="https://www.creative-tim.com/product/material-dashboard-pro-laravel-livewire"
-                                    target="_blank" class="text-white"><u>here</u> </a></strong>to see
-                            the xxwdffgx product!</h6>
+                        <h6 class="text-white mx-3">User Management</h6>
                     </div>
                 </div>
-                <div class=" me-3 my-3 text-end">
-                    <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i
-                            class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New
-                        User</a>
-                </div>
+
+                @if (session()->has('message'))
+                    <div class="alert alert-success mx-3">
+                        {{ session('message') }}
+                    </div>
+                @endif
+
+                @if($isEditing)
+                    <div class="card-body">
+                        <form wire:submit.prevent="{{ $editingUserId ? 'update' : 'create' }}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-outline my-3">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" wire:model="name">
+                                    </div>
+                                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-outline my-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" wire:model="email">
+                                    </div>
+                                    @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-outline my-3">
+                                        <label for="phone" class="form-label">Phone</label>
+                                        <input type="text" class="form-control" wire:model="phone">
+                                    </div>
+                                    @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-outline my-3">
+                                        <label for="location" class="form-label">Location</label>
+                                        <input type="text" class="form-control" wire:model="location">
+                                    </div>
+                                    @error('location') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="input-group input-group-outline my-3">
+                                <label for="about" class="form-label">About</label>
+                                <textarea class="form-control" wire:model="about" rows="3"></textarea>
+                            </div>
+                            @error('about') <span class="text-danger">{{ $message }}</span> @enderror
+
+                            @if(!$editingUserId)
+                                <div class="input-group input-group-outline my-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" wire:model="password">
+                                </div>
+                                @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                            @endif
+
+                            <button type="submit" class="btn btn-primary">{{ $editingUserId ? 'Update' : 'Create' }} User</button>
+                            <button type="button" class="btn btn-secondary" wire:click="resetForm">Cancel</button>
+                        </form>
+                    </div>
+                @else
+                    <div class="me-3 my-3 text-end">
+                        <a class="btn bg-gradient-dark mb-0" href="javascript:;" wire:click="$set('isEditing', true)">
+                            <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New User
+                        </a>
+                    </div>
+                @endif
+
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        ID
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        PHOTO</th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        NAME</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        EMAIL</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        ROLE</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        CREATION DATE
-                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Location</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created At</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
@@ -59,39 +101,27 @@
                                     </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
-                                            <div>
-                                                <img src="{{ asset('assets') }}/img/team-{{ $loop->iteration }}.jpg"
-                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user{{ $loop->iteration }}">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
                                         <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>
                                     </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <p class="text-xs text-secondary mb-0">{{ $user->phone }}</p>
+                                    </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->role }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->location }}</span>
                                     </td>
                                     <td class="align-middle text-center">
                                         <span class="text-secondary text-xs font-weight-bold">{{ $user->created_at->format('d/m/y') }}</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a rel="tooltip" class="btn btn-success btn-link"
-                                            href="" data-original-title=""
-                                            title="">
-                                            <i class="material-icons">edit</i>
-                                            <div class="ripple-container"></div>
+                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" wire:click="edit({{ $user->id }})">
+                                            Edit
                                         </a>
-                                        
-                                        <button type="button" class="btn btn-danger btn-link"
-                                        data-original-title="" title="">
-                                        <i class="material-icons">close</i>
-                                        <div class="ripple-container"></div>
-                                    </button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -99,6 +129,7 @@
                         </table>
                     </div>
                 </div>
+                {{ $users->links() }}
             </div>
         </div>
     </div>
