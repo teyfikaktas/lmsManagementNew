@@ -20,14 +20,14 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group input-group-outline my-3">
-                    <input type="text" class="form-control" wire:model="name" placeholder=" ">
+                    <input type="text" class="form-control" wire:model="name">
                     <label class="form-label">Ad</label>
                 </div>
                 @error('name') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
             <div class="col-md-6">
                 <div class="input-group input-group-outline my-3">
-                    <input type="email" class="form-control" wire:model="email" placeholder=" ">
+                    <input type="email" class="form-control" wire:model="email">
                     <label class="form-label">E-posta</label>
                 </div>
                 @error('email') <span class="text-danger">{{ $message }}</span> @enderror
@@ -36,28 +36,28 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group input-group-outline my-3">
-                    <input type="text" class="form-control" wire:model="phone" placeholder=" ">
+                    <input type="text" class="form-control" wire:model="phone">
                     <label class="form-label">Telefon</label>
                 </div>
                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
             <div class="col-md-6">
                 <div class="input-group input-group-outline my-3">
-                    <input type="text" class="form-control" wire:model="location" placeholder=" ">
+                    <input type="text" class="form-control" wire:model="location">
                     <label class="form-label">Konum</label>
                 </div>
                 @error('location') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
         </div>
         <div class="input-group input-group-outline my-3">
-            <textarea class="form-control" wire:model="about" rows="3" placeholder=" "></textarea>
+            <textarea class="form-control" wire:model="about" rows="3"></textarea>
             <label class="form-label">Hakkında</label>
         </div>
         @error('about') <span class="text-danger">{{ $message }}</span> @enderror
 
         @if(!$editingUserId)
             <div class="input-group input-group-outline my-3">
-                <input type="password" class="form-control" wire:model="password" placeholder=" ">
+                <input type="password" class="form-control" wire:model="password">
                 <label class="form-label">Şifre</label>
             </div>
             @error('password') <span class="text-danger">{{ $message }}</span> @enderror
