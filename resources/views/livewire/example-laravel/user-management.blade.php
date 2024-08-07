@@ -14,13 +14,13 @@
                     </div>
                 @endif
 
-                @if (auth()->check() && auth()->user()->role == 1)
+                @if (auth()->check() && auth()->user()->is_teacher)
                     <div class="alert alert-info mx-3">
-                        Adminsiniz
+                        Öğretmensiniz
                     </div>
                 @endif
                 
-                @if($isEditing)
+                @if($isEditing && auth()->user()->is_teacher)
                 <div class="card-body">
                     <form wire:submit.prevent="{{ $editingUserId ? 'update' : 'create' }}">
                         <div class="row">
@@ -63,6 +63,34 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="my-3">
+                                    <label class="form-label">Öğretmen Adı:</label>
+                                    <div class="input-group input-group-outline">
+                                        <input type="text" class="form-control" wire:model="teacher_name">
+                                    </div>
+                                    @error('teacher_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="my-3">
+                                    <label class="form-label">Sınıf Kodu:</label>
+                                    <div class="input-group input-group-outline">
+                                        <input type="text" class="form-control" wire:model="class_code">
+                                    </div>
+                                    @error('class_code') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-3">
+                            <label class="form-label">Öğretmen mi?</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" wire:model="is_teacher">
+                                <label class="form-check-label">Evet</label>
+                            </div>
+                            @error('is_teacher') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
                         <div class="my-3">
                             <label class="form-label">Hakkında:</label>
                             <div class="input-group input-group-outline">
@@ -83,7 +111,7 @@
                         <button type="button" class="btn btn-secondary" wire:click="resetForm">İptal</button>
                     </form>
                 </div>
-                @else
+                @elseif(auth()->user()->is_teacher)
                     <div class="me-3 my-3 text-end">
                         <a class="btn bg-gradient-dark mb-0" href="javascript:;" wire:click="$set('isEditing', true)">
                             <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Yeni Kullanıcı Ekle
@@ -101,6 +129,9 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">E-posta</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Telefon</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Konum</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Öğretmen Adı</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sınıf Kodu</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Öğretmen mi?</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Oluşturulma Tarihi</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -132,12 +163,23 @@
                                         <span class="text-secondary text-xs font-weight-bold">{{ $user->location }}</span>
                                     </td>
                                     <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->teacher_name }}</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->class_code }}</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->is_teacher ? 'Evet' : 'Hayır' }}</span>
+                                    </td>
+                                    <td class="align-middle text-center">
                                         <span class="text-secondary text-xs font-weight-bold">{{ $user->created_at->format('d/m/y') }}</span>
                                     </td>
                                     <td class="align-middle">
+                                        @if(auth()->user()->is_teacher)
                                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" wire:click="edit({{ $user->id }})">
                                             Düzenle
                                         </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
