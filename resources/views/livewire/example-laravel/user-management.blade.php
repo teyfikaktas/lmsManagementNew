@@ -28,48 +28,47 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($users as $user)
                                 <tr>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <p class="mb-0 text-sm">{{ $user->id }}</p>
+                                                <p class="mb-0 text-sm">1</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div>
-                                                <img src="{{ asset('assets/img/team-' . $user->id . '.jpg') }}" class="avatar avatar-sm me-3 border-radius-lg" alt="{{ $user->name }}">
+                                                <img src="{{ asset('assets/img/team-2.jpg') }}" class="avatar avatar-sm me-3 border-radius-lg" alt="kullanıcı1">
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
+                                            <h6 class="mb-0 text-sm">Ahmet</h6>
                                         </div>
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>
+                                        <p class="text-xs text-secondary mb-0">ahmet@ornek.com</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->role }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">Yönetici</span>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->created_at->format('d/m/y') }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">22/03/18</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a rel="tooltip" class="btn btn-success btn-link" href="javascript:;" onclick="openEditUserModal({{ $user->id }})" data-original-title="" title="">
+                                        <a rel="tooltip" class="btn btn-success btn-link" href="javascript:;" onclick="openEditUserModal(1)" data-original-title="" title="">
                                             <i class="material-icons">edit</i>
                                             <div class="ripple-container"></div>
                                         </a>
-                                        <button type="button" class="btn btn-danger btn-link" onclick="openDeleteUserModal({{ $user->id }})" data-original-title="" title="">
+                                        <button type="button" class="btn btn-danger btn-link" onclick="openDeleteUserModal(1)" data-original-title="" title="">
                                             <i class="material-icons">close</i>
                                             <div class="ripple-container"></div>
                                         </button>
                                     </td>
                                 </tr>
-                                @endforeach
+                                <!-- Daha fazla kullanıcı satırı buraya eklenebilir -->
                             </tbody>
                         </table>
                     </div>
@@ -155,27 +154,11 @@
     }
 
     function addUser() {
-        // AJAX ile kullanıcı ekleme işlemi
-        var form = document.getElementById('addUserForm');
-        var formData = new FormData(form);
-
-        fetch('{{ route("users.store") }}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Kullanıcı eklendi:', data);
-            // Sayfayı yenileme veya kullanıcıyı tabloya ekleme
-            location.reload();
-        })
-        .catch(error => {
-            console.error('Hata:', error);
-        });
-
+        // Kullanıcı ekleme işlemi burada yapılacak
+        var name = document.getElementById('userName').value;
+        var email = document.getElementById('userEmail').value;
+        var role = document.getElementById('userRole').value;
+        console.log('Yeni kullanıcı eklendi:', {name, email, role});
         // Modal'ı kapatma
         var modal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
         modal.hide();
@@ -183,24 +166,8 @@
 
     function deleteUser() {
         var userId = document.getElementById('deleteUserModal').getAttribute('data-user-id');
-        
-        fetch(`/users/${userId}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Kullanıcı silindi:', data);
-            // Sayfayı yenileme veya kullanıcıyı tablodan kaldırma
-            location.reload();
-        })
-        .catch(error => {
-            console.error('Hata:', error);
-        });
-
+        console.log('Kullanıcı silindi, ID:', userId);
+        // Silme işlemi burada yapılacak
         // Modal'ı kapatma
         var modal = bootstrap.Modal.getInstance(document.getElementById('deleteUserModal'));
         modal.hide();
