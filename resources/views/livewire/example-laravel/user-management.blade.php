@@ -14,12 +14,12 @@
                     </div>
                 @endif
 
-                @if (session('role') == 1)
+                @if (auth()->check() && auth()->user()->role == 1)
                     <div class="alert alert-info mx-3">
                         Adminsiniz
                     </div>
                 @endif
-
+                
                 @if($isEditing)
                 <div class="card-body">
                     <form wire:submit.prevent="{{ $editingUserId ? 'update' : 'create' }}">
