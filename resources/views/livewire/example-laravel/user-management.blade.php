@@ -16,55 +16,68 @@
 
                 @if($isEditing)
                 <div class="card-body">
- <form wire:submit.prevent="{{ $editingUserId ? 'update' : 'create' }}">
-<div class="row">
-<div class="col-md-6">
-<div class="input-group input-group-outline my-3">
-<label class="form-label">Ad:</label>
-<input type="text" class="form-control" wire:model="name">
+    <form wire:submit.prevent="{{ $editingUserId ? 'update' : 'create' }}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="my-3">
+                    <label class="form-label">Ad:</label>
+                    <div class="input-group input-group-outline">
+                        <input type="text" class="form-control" wire:model="name">
+                    </div>
+                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="my-3">
+                    <label class="form-label">E-posta:</label>
+                    <div class="input-group input-group-outline">
+                        <input type="email" class="form-control" wire:model="email">
+                    </div>
+                    @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="my-3">
+                    <label class="form-label">Telefon:</label>
+                    <div class="input-group input-group-outline">
+                        <input type="text" class="form-control" wire:model="phone">
+                    </div>
+                    @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="my-3">
+                    <label class="form-label">Konum:</label>
+                    <div class="input-group input-group-outline">
+                        <input type="text" class="form-control" wire:model="location">
+                    </div>
+                    @error('location') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+        </div>
+        <div class="my-3">
+            <label class="form-label">Hakkında:</label>
+            <div class="input-group input-group-outline">
+                <textarea class="form-control" wire:model="about" rows="3"></textarea>
+            </div>
+            @error('about') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
+        @if(!$editingUserId)
+        <div class="my-3">
+            <label class="form-label">Şifre:</label>
+            <div class="input-group input-group-outline">
+                <input type="password" class="form-control" wire:model="password">
+            </div>
+            @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
+        @endif
+        <button type="submit" class="btn btn-primary">{{ $editingUserId ? 'Güncelle' : 'Oluştur' }}</button>
+        <button type="button" class="btn btn-secondary" wire:click="resetForm">İptal</button>
+    </form>
 </div>
- @error('name') <span class="text-danger">{{ $message }}</span> @enderror
-</div>
-<div class="col-md-6">
-<div class="input-group input-group-outline my-3">
-<label class="form-label">E-posta:</label>
-<input type="email" class="form-control" wire:model="email">
-</div>
- @error('email') <span class="text-danger">{{ $message }}</span> @enderror
-</div>
-</div>
-<div class="row">
-<div class="col-md-6">
-<div class="input-group input-group-outline my-3">
-<label class="form-label">Telefon:</label>
-<input type="text" class="form-control" wire:model="phone">
-</div>
- @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
-</div>
-<div class="col-md-6">
-<div class="input-group input-group-outline my-3">
-<label class="form-label">Konum:</label>
-<input type="text" class="form-control" wire:model="location">
-</div>
- @error('location') <span class="text-danger">{{ $message }}</span> @enderror
-</div>
-</div>
-<div class="input-group input-group-outline my-3">
-<label class="form-label">Hakkında:</label>
-<textarea class="form-control" wire:model="about" rows="3"></textarea>
-</div>
- @error('about') <span class="text-danger">{{ $message }}</span> @enderror
- @if(!$editingUserId)
-<div class="input-group input-group-outline my-3">
-<label class="form-label">Şifre:</label>
-<input type="password" class="form-control" wire:model="password">
-</div>
- @error('password') <span class="text-danger">{{ $message }}</span> @enderror
- @endif
-<button type="submit" class="btn btn-primary">{{ $editingUserId ? 'Güncelle' : 'Oluştur' }}</button>
-<button type="button" class="btn btn-secondary" wire:click="resetForm">İptal</button>
-</form>
-</div>
+
                 @else
                     <div class="me-3 my-3 text-end">
                         <a class="btn bg-gradient-dark mb-0" href="javascript:;" wire:click="$set('isEditing', true)">
