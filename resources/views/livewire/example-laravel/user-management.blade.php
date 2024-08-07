@@ -4,7 +4,7 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white mx-3">User Management</h6>
+                        <h6 class="text-white mx-3">Kullanıcı Yönetimi</h6>
                     </div>
                 </div>
 
@@ -20,14 +20,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline my-3">
-                                        <label for="name" class="form-label">Name</label>
+                                        <label for="name" class="form-label">Ad</label>
                                         <input type="text" class="form-control" wire:model="name">
                                     </div>
                                     @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline my-3">
-                                        <label for="email" class="form-label">Email</label>
+                                        <label for="email" class="form-label">E-posta</label>
                                         <input type="email" class="form-control" wire:model="email">
                                     </div>
                                     @error('email') <span class="text-danger">{{ $message }}</span> @enderror
@@ -36,41 +36,41 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline my-3">
-                                        <label for="phone" class="form-label">Phone</label>
+                                        <label for="phone" class="form-label">Telefon</label>
                                         <input type="text" class="form-control" wire:model="phone">
                                     </div>
                                     @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline my-3">
-                                        <label for="location" class="form-label">Location</label>
+                                        <label for="location" class="form-label">Konum</label>
                                         <input type="text" class="form-control" wire:model="location">
                                     </div>
                                     @error('location') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="input-group input-group-outline my-3">
-                                <label for="about" class="form-label">About</label>
+                                <label for="about" class="form-label">Hakkında</label>
                                 <textarea class="form-control" wire:model="about" rows="3"></textarea>
                             </div>
                             @error('about') <span class="text-danger">{{ $message }}</span> @enderror
 
                             @if(!$editingUserId)
                                 <div class="input-group input-group-outline my-3">
-                                    <label for="password" class="form-label">Password</label>
+                                    <label for="password" class="form-label">Şifre</label>
                                     <input type="password" class="form-control" wire:model="password">
                                 </div>
                                 @error('password') <span class="text-danger">{{ $message }}</span> @enderror
                             @endif
 
-                            <button type="submit" class="btn btn-primary">{{ $editingUserId ? 'Update' : 'Create' }} User</button>
-                            <button type="button" class="btn btn-secondary" wire:click="resetForm">Cancel</button>
+                            <button type="submit" class="btn btn-primary">{{ $editingUserId ? 'Güncelle' : 'Oluştur' }}</button>
+                            <button type="button" class="btn btn-secondary" wire:click="resetForm">İptal</button>
                         </form>
                     </div>
                 @else
                     <div class="me-3 my-3 text-end">
                         <a class="btn bg-gradient-dark mb-0" href="javascript:;" wire:click="$set('isEditing', true)">
-                            <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New User
+                            <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Yeni Kullanıcı Ekle
                         </a>
                     </div>
                 @endif
@@ -81,11 +81,11 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Location</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created At</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ad</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">E-posta</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Telefon</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Konum</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Oluşturulma Tarihi</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
@@ -120,7 +120,7 @@
                                     </td>
                                     <td class="align-middle">
                                         <a href="javascript:;" class="text-secondary font-weight-bold text-xs" wire:click="edit({{ $user->id }})">
-                                            Edit
+                                            Düzenle
                                         </a>
                                     </td>
                                 </tr>
