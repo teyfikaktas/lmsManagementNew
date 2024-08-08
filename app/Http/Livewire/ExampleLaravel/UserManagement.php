@@ -12,7 +12,6 @@ class UserManagement extends Component
     use WithPagination;
 
     public $name, $email, $phone, $location, $about, $password;
-    public $teacher_name, $class_code, $is_teacher;
     public $isEditing = false;
     public $editingUserId;
 
@@ -22,9 +21,6 @@ class UserManagement extends Component
         'phone' => 'nullable',
         'location' => 'nullable',
         'about' => 'nullable',
-        'teacher_name' => 'nullable',
-        'class_code' => 'nullable',
-        'is_teacher' => 'boolean',
         'password' => 'required|min:6',
     ];
 
@@ -46,14 +42,11 @@ class UserManagement extends Component
             'phone' => $this->phone,
             'location' => $this->location,
             'about' => $this->about,
-            'teacher_name' => $this->teacher_name,
-            'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher,
             'password' => Hash::make($this->password),
         ]);
 
         $this->resetForm();
-        session()->flash('message', 'Kullanıcı başarıyla oluşturuldu.');
+        session()->flash('message', 'User successfully created.');
     }
 
     public function edit($id)
@@ -66,9 +59,6 @@ class UserManagement extends Component
         $this->phone = $user->phone;
         $this->location = $user->location;
         $this->about = $user->about;
-        $this->teacher_name = $user->teacher_name;
-        $this->class_code = $user->class_code;
-        $this->is_teacher = $user->is_teacher;
     }
 
     public function update()
@@ -79,9 +69,6 @@ class UserManagement extends Component
             'phone' => 'nullable',
             'location' => 'nullable',
             'about' => 'nullable',
-            'teacher_name' => 'nullable',
-            'class_code' => 'nullable',
-            'is_teacher' => 'boolean',
         ]);
 
         $user = User::findOrFail($this->editingUserId);
@@ -91,13 +78,10 @@ class UserManagement extends Component
             'phone' => $this->phone,
             'location' => $this->location,
             'about' => $this->about,
-            'teacher_name' => $this->teacher_name,
-            'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher,
         ]);
 
         $this->resetForm();
-        session()->flash('message', 'Kullanıcı başarıyla güncellendi.');
+        session()->flash('message', 'User successfully updated.');
     }
 
     public function resetForm()
@@ -107,9 +91,6 @@ class UserManagement extends Component
         $this->phone = '';
         $this->location = '';
         $this->about = '';
-        $this->teacher_name = '';
-        $this->class_code = '';
-        $this->is_teacher = false;
         $this->password = '';
         $this->isEditing = false;
         $this->editingUserId = null;
