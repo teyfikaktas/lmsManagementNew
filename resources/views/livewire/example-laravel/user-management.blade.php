@@ -84,13 +84,14 @@
                             </div>
                         </div>
                         <div class="my-3">
-                            <label class="form-label">Öğretmen mi?</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" wire:model="is_teacher">
-                                <label class="form-check-label">Evet</label>
-                            </div>
-                            @error('is_teacher') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
+    <label class="form-label">Öğretmen mi?</label>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" wire:model="is_teacher">
+        <label class="form-check-label">Evet</label>
+    </div>
+    @error('is_teacher') <span class="text-danger">{{ $message }}</span> @enderror
+</div>
+
                         <div class="my-3">
                             <label class="form-label">Hakkında:</label>
                             <div class="input-group input-group-outline">
