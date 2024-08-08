@@ -4,7 +4,7 @@
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+* Copyright 2021  (https://www.creative-tim.com)
 * Licensed under MIT (https://www.creative-tim.com/license)
 * Coded by Creative Tim
 
@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Material Dashboard 2 by Creative Tim & UPDIVISION
+    Material Dashboard 2 by  & UPDIVISION
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -117,7 +117,7 @@
                   document.write(new Date().getFullYear())
                 </script>,
                 made with <i class="fa fa-heart" aria-hidden="true"></i> by
-                <a href="https://www.creative-tim.com" class="font-weight-bold text-white" target="_blank">Creative Tim & UPDIVISION</a>
+                <a href="https://www.creative-tim.com" class="font-weight-bold text-white" target="_blank"> & UPDIVISION</a>
                 for a better web.
               </div>
             </div>
