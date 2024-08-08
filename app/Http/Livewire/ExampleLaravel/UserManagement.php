@@ -41,12 +41,10 @@ class UserManagement extends Component
             'users' => $users
         ]);
     }
-
     public function loadTeachers()
     {
-        $this->teachers = User::where('is_teacher', true)->get();
+        $this->teachers = User::where('is_teacher', true)->get(['id', 'name']);
     }
-
     public function create()
     {
         $this->validate();
@@ -62,9 +60,38 @@ class UserManagement extends Component
             'is_teacher' => $this->is_teacher,
             'password' => Hash::make($this->password),
         ]);
-
+    
         $this->resetForm();
         session()->flash('message', 'Kullanıcı başarıyla oluşturuldu.');
+    }
+    
+    public function update()
+    {
+        $this->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:users,email,' . $this->editingUserId,
+            'phone' => 'nullable',
+            'location' => 'nullable',
+            'about' => 'nullable',
+            'teacher_id' => 'nullable|exists:users,id',
+            'class_code' => 'nullable',
+            'is_teacher' => 'boolean',
+        ]);
+    
+        $user = User::findOrFail($this->editingUserId);
+        $user->update([
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'location' => $this->location,
+            'about' => $this->about,
+            'teacher_id' => $this->teacher_id,
+            'class_code' => $this->class_code,
+            'is_teacher' => $this->is_teacher,
+        ]);
+    
+        $this->resetForm();
+        session()->flash('message', 'Kullanıcı başarıyla güncellendi.');
     }
 
     public function edit($id)
@@ -82,34 +109,6 @@ class UserManagement extends Component
         $this->is_teacher = $user->is_teacher;
     }
 
-    public function update()
-    {
-        $this->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email,' . $this->editingUserId,
-            'phone' => 'nullable',
-            'location' => 'nullable',
-            'about' => 'nullable',
-            'teacher_id' => 'nullable|exists:users,id',
-            'class_code' => 'nullable',
-            'is_teacher' => 'boolean',
-        ]);
-
-        $user = User::findOrFail($this->editingUserId);
-        $user->update([
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'location' => $this->location,
-            'about' => $this->about,
-            'teacher_id' => $this->teacher_id,
-            'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher,
-        ]);
-
-        $this->resetForm();
-        session()->flash('message', 'Kullanıcı başarıyla güncellendi.');
-    }
 
     public function resetForm()
     {
