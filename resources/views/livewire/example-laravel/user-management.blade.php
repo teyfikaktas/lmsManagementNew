@@ -19,7 +19,6 @@
                         Adminsiniz
                     </div>
                 @endif
-                
                 @if($isEditing)
                 <div class="card-body">
                     <form wire:submit.prevent="{{ $editingUserId ? 'update' : 'create' }}">
