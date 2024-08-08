@@ -93,7 +93,8 @@ class UserManagement extends Component
             'about' => $this->about,
             'teacher_name' => $this->teacher_name,
             'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher,
+            'is_teacher' => $this->is_teacher === true || $this->is_teacher === 'true' || $this->is_teacher === 1,
+
         ]);
 
         $this->resetForm();
