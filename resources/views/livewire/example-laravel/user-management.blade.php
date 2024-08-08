@@ -66,11 +66,16 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="my-3">
-                                    <label class="form-label">Öğretmen Adı:</label>
+                                    <label class="form-label">Öğretmen:</label>
                                     <div class="input-group input-group-outline">
-                                        <input type="text" class="form-control" wire:model="teacher_name">
+                                        <select class="form-control" wire:model="teacher_id">
+                                            <option value="">Öğretmen Seçin</option>
+                                            @foreach($teachers as $teacher)
+                                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    @error('teacher_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                    @error('teacher_id') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -84,14 +89,13 @@
                             </div>
                         </div>
                         <div class="my-3">
-    <label class="form-label">Öğretmen mi?</label>
-    <div class="form-check">
-    <input class="form-check-input" type="checkbox" wire:model="is_teacher">
-                <label class="form-check-label">Evet</label>
-    </div>
-    @error('is_teacher') <span class="text-danger">{{ $message }}</span> @enderror
-</div>
-
+                            <label class="form-label">Öğretmen mi?</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" wire:model="is_teacher">
+                                <label class="form-check-label">Evet</label>
+                            </div>
+                            @error('is_teacher') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
 
                         <div class="my-3">
                             <label class="form-label">Hakkında:</label>
@@ -131,7 +135,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">E-posta</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Telefon</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Konum</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Öğretmen Adı</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Öğretmen</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sınıf Kodu</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Öğretmen mi?</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Oluşturulma Tarihi</th>
@@ -165,7 +169,7 @@
                                         <span class="text-secondary text-xs font-weight-bold">{{ $user->location }}</span>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->teacher_name }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->teacher ? $user->teacher->name : '-' }}</span>
                                     </td>
                                     <td class="align-middle text-center">
                                         <span class="text-secondary text-xs font-weight-bold">{{ $user->class_code }}</span>

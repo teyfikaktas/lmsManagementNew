@@ -24,6 +24,9 @@ class User extends Authenticatable
         'location',
         'phone',
         'about',
+        'teacher_name',  // Yeni eklenen
+        'class_code',    // Yeni eklenen
+        'is_teacher',    // Yeni eklenen
     ];
 
     /**
@@ -48,5 +51,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_teacher' => 'boolean',  // Yeni eklenen
     ];
 }

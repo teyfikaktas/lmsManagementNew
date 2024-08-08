@@ -12,9 +12,10 @@ class UserManagement extends Component
     use WithPagination;
 
     public $name, $email, $phone, $location, $about, $password;
-    public $teacher_name, $class_code, $is_teacher;
+    public $teacher_id, $class_code, $is_teacher;
     public $isEditing = false;
     public $editingUserId;
+    public $teachers;
 
     protected $rules = [
         'name' => 'required|min:3',
@@ -22,11 +23,16 @@ class UserManagement extends Component
         'phone' => 'nullable',
         'location' => 'nullable',
         'about' => 'nullable',
-        'teacher_name' => 'nullable',
+        'teacher_id' => 'nullable|exists:users,id',
         'class_code' => 'nullable',
         'is_teacher' => 'boolean',
         'password' => 'required|min:6',
     ];
+
+    public function mount()
+    {
+        $this->loadTeachers();
+    }
 
     public function render()
     {
@@ -34,6 +40,11 @@ class UserManagement extends Component
         return view('livewire.example-laravel.user-management', [
             'users' => $users
         ]);
+    }
+
+    public function loadTeachers()
+    {
+        $this->teachers = User::where('is_teacher', true)->get();
     }
 
     public function create()
@@ -46,9 +57,9 @@ class UserManagement extends Component
             'phone' => $this->phone,
             'location' => $this->location,
             'about' => $this->about,
-            'teacher_name' => $this->teacher_name,
+            'teacher_id' => $this->teacher_id,
             'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher ? 'Y' : 'N',
+            'is_teacher' => $this->is_teacher,
             'password' => Hash::make($this->password),
         ]);
 
@@ -66,9 +77,9 @@ class UserManagement extends Component
         $this->phone = $user->phone;
         $this->location = $user->location;
         $this->about = $user->about;
-        $this->teacher_name = $user->teacher_name;
+        $this->teacher_id = $user->teacher_id;
         $this->class_code = $user->class_code;
-        $this->is_teacher = $user->is_teacher === 'Y';
+        $this->is_teacher = $user->is_teacher;
     }
 
     public function update()
@@ -79,7 +90,7 @@ class UserManagement extends Component
             'phone' => 'nullable',
             'location' => 'nullable',
             'about' => 'nullable',
-            'teacher_name' => 'nullable',
+            'teacher_id' => 'nullable|exists:users,id',
             'class_code' => 'nullable',
             'is_teacher' => 'boolean',
         ]);
@@ -91,9 +102,9 @@ class UserManagement extends Component
             'phone' => $this->phone,
             'location' => $this->location,
             'about' => $this->about,
-            'teacher_name' => $this->teacher_name,
+            'teacher_id' => $this->teacher_id,
             'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher ? 'Y' : 'N',
+            'is_teacher' => $this->is_teacher,
         ]);
 
         $this->resetForm();
@@ -107,7 +118,7 @@ class UserManagement extends Component
         $this->phone = '';
         $this->location = '';
         $this->about = '';
-        $this->teacher_name = '';
+        $this->teacher_id = null;
         $this->class_code = '';
         $this->is_teacher = false;
         $this->password = '';
