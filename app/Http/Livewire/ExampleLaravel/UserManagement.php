@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\ExampleLaravel;
 
-use Livewire\Component;
 use App\Models\User;
+use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,8 +30,9 @@ class UserManagement extends Component
 
     public function render()
     {
-        return view('livewire.user-management', [
-            'users' => User::paginate(10),
+        $users = User::paginate(10);
+        return view('livewire.example-laravel.user-management', [
+            'users' => $users
         ]);
     }
 
@@ -101,6 +102,16 @@ class UserManagement extends Component
 
     public function resetForm()
     {
-        $this->reset(['name', 'email', 'phone', 'location', 'about', 'teacher_name', 'class_code', 'is_teacher', 'password', 'isEditing', 'editingUserId']);
+        $this->name = '';
+        $this->email = '';
+        $this->phone = '';
+        $this->location = '';
+        $this->about = '';
+        $this->teacher_name = '';
+        $this->class_code = '';
+        $this->is_teacher = false;
+        $this->password = '';
+        $this->isEditing = false;
+        $this->editingUserId = null;
     }
 }
