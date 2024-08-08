@@ -5,23 +5,19 @@ namespace App\Http\Livewire\ExampleLaravel;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Hash;
 
 class UserManagement extends Component
 {
     use WithPagination;
 
-    public $name, $email, $phone, $location, $about, $password;
+    public $name, $email, $role;
     public $isEditing = false;
     public $editingUserId;
 
     protected $rules = [
         'name' => 'required|min:3',
         'email' => 'required|email|unique:users,email',
-        'phone' => 'nullable',
-        'location' => 'nullable',
-        'about' => 'nullable',
-        'password' => 'required|min:6',
+        'role' => 'required|in:Admin,Creator,Member',
     ];
 
     public function render()
@@ -39,14 +35,12 @@ class UserManagement extends Component
         User::create([
             'name' => $this->name,
             'email' => $this->email,
-            'phone' => $this->phone,
-            'location' => $this->location,
-            'about' => $this->about,
-            'password' => Hash::make($this->password),
+            'role' => $this->role,
+            'password' => bcrypt('default_password'), // Güvenlik için gerçek uygulamada bu kısmı değiştirin
         ]);
 
         $this->resetForm();
-        session()->flash('message', 'User successfully created.');
+        session()->flash('message', 'Kullanıcı başarıyla oluşturuldu.');
     }
 
     public function edit($id)
@@ -56,9 +50,7 @@ class UserManagement extends Component
         $user = User::findOrFail($id);
         $this->name = $user->name;
         $this->email = $user->email;
-        $this->phone = $user->phone;
-        $this->location = $user->location;
-        $this->about = $user->about;
+        $this->role = $user->role;
     }
 
     public function update()
@@ -66,32 +58,31 @@ class UserManagement extends Component
         $this->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email,' . $this->editingUserId,
-            'phone' => 'nullable',
-            'location' => 'nullable',
-            'about' => 'nullable',
+            'role' => 'required|in:Admin,Creator,Member',
         ]);
 
         $user = User::findOrFail($this->editingUserId);
         $user->update([
             'name' => $this->name,
             'email' => $this->email,
-            'phone' => $this->phone,
-            'location' => $this->location,
-            'about' => $this->about,
+            'role' => $this->role,
         ]);
 
         $this->resetForm();
-        session()->flash('message', 'User successfully updated.');
+        session()->flash('message', 'Kullanıcı başarıyla güncellendi.');
     }
 
-    public function resetForm()
+    public function delete($id)
+    {
+        User::findOrFail($id)->delete();
+        session()->flash('message', 'Kullanıcı başarıyla silindi.');
+    }
+
+    private function resetForm()
     {
         $this->name = '';
         $this->email = '';
-        $this->phone = '';
-        $this->location = '';
-        $this->about = '';
-        $this->password = '';
+        $this->role = '';
         $this->isEditing = false;
         $this->editingUserId = null;
     }
