@@ -39,7 +39,7 @@ class UserManagement extends Component
     public function create()
     {
         $this->validate();
-
+        
         User::create([
             'name' => $this->name,
             'email' => $this->email,
@@ -48,7 +48,7 @@ class UserManagement extends Component
             'about' => $this->about,
             'teacher_name' => $this->teacher_name,
             'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher,
+            'is_teacher' => $this->is_teacher ? 1 : 0,
             'password' => Hash::make($this->password),
         ]);
 
@@ -68,7 +68,7 @@ class UserManagement extends Component
         $this->about = $user->about;
         $this->teacher_name = $user->teacher_name;
         $this->class_code = $user->class_code;
-        $this->is_teacher = $user->is_teacher ? true : false; // Checkbox işaretli durumu
+        $this->is_teacher = (bool)$user->is_teacher;
     }
 
     public function update()
@@ -93,8 +93,7 @@ class UserManagement extends Component
             'about' => $this->about,
             'teacher_name' => $this->teacher_name,
             'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher === true || $this->is_teacher === 'true' || $this->is_teacher === 1,
-
+            'is_teacher' => $this->is_teacher ? 1 : 0,
         ]);
 
         $this->resetForm();
