@@ -48,7 +48,7 @@ class UserManagement extends Component
             'about' => $this->about,
             'teacher_name' => $this->teacher_name,
             'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher ? 1 : 0,
+            'is_teacher' => $this->is_teacher ? 'Y' : 'N',
             'password' => Hash::make($this->password),
         ]);
 
@@ -68,7 +68,7 @@ class UserManagement extends Component
         $this->about = $user->about;
         $this->teacher_name = $user->teacher_name;
         $this->class_code = $user->class_code;
-        $this->is_teacher = (bool)$user->is_teacher;
+        $this->is_teacher = $user->is_teacher === 'Y';
     }
 
     public function update()
@@ -93,7 +93,7 @@ class UserManagement extends Component
             'about' => $this->about,
             'teacher_name' => $this->teacher_name,
             'class_code' => $this->class_code,
-            'is_teacher' => $this->is_teacher ? 1 : 0,
+            'is_teacher' => $this->is_teacher ? 'Y' : 'N',
         ]);
 
         $this->resetForm();
