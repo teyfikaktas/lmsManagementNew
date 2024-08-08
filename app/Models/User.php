@@ -25,6 +25,7 @@ class User extends Authenticatable
         'phone',
         'about',
         'teacher_name',  // Yeni eklenen
+        'teacher_id', // Bunu ekleyin
         'class_code',    // Yeni eklenen
         'is_teacher',    // Yeni eklenen
     ];
