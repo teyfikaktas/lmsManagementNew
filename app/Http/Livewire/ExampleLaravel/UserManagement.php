@@ -68,7 +68,7 @@ class UserManagement extends Component
         $this->about = $user->about;
         $this->teacher_name = $user->teacher_name;
         $this->class_code = $user->class_code;
-        $this->is_teacher = $user->is_teacher;
+        $this->is_teacher = $user->is_teacher ? true : false; // Checkbox işaretli durumu
     }
 
     public function update()

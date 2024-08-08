@@ -92,6 +92,7 @@
     @error('is_teacher') <span class="text-danger">{{ $message }}</span> @enderror
 </div>
 
+
                         <div class="my-3">
                             <label class="form-label">Hakkında:</label>
                             <div class="input-group input-group-outline">
